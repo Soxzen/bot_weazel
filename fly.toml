@@ -1,0 +1,22 @@
+# Bot Discord : il se CONNECTE a Discord, il ne RECOIT pas de trafic web.
+# D'ou l'absence totale de section [http_service] — c'est le point que
+# "fly launch" rate le plus souvent sur un bot.
+app = "bot-weazel"
+primary_region = "cdg"
+
+[build]
+
+[env]
+  NODE_ENV = "production"
+
+# Un bot doit tourner en permanence : pas d'extinction automatique.
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"
+
+# ── A DECOMMENTER UNIQUEMENT si le bot stocke des donnees (SQLite, JSON) ──
+# SANS CE VOLUME, TOUT EST EFFACE A CHAQUE DEPLOIEMENT.
+# Creer d'abord : fly volumes create bot_data --size 1 --region cdg
+# [[mounts]]
+#   source = "bot_data"
+#   destination = "/data"
